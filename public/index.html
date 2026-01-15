@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze - Coastal Food Delivery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #FDFBF7;
+            color: #2C3E50;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid #e0f2fe;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            background-color: #0891b2;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #164e63;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: #2C3E50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0891b2;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        .icon-btn:hover {
+            background-color: #e0f2fe;
+        }
+
+        .cart-badge {
+            position: relative;
+        }
+
+        .cart-badge::after {
+            content: '2';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #f97316;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .hero {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 em {
+            font-style: italic;
+            font-family: Georgia, serif;
+        }
+
+        .subtitle {
+            color: #0891b2;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 139, 178, 0.1);
+            border: 1px solid #e0f2fe;
+            margin-top: 2rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 1rem;
+            background: transparent;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background-color: #164e63;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #0f3a47;
+        }
+
+        .hero-image-container {
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            border-radius: 2.5rem;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rating-card {
+            position: absolute;
+            bottom: -24px;
+            left: -24px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid #e0f2fe;
+        }
+
+        .rating-number {
+            background-color: #fed7aa;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            color: #f97316;
+            font-weight: bold;
+            font-size: 1.25rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .rating-info p:first-child {
+            font-weight: 600;
+            color: #164e63;
+        }
+
+        .rating-info p:last-child {
+            font-size: 0.875rem;
+            color: #999;
+            text-decoration: underline;
+        }
+
+        .categories-section {
+            background: #f7f9fb;
+            padding: 3rem 2rem;
+        }
+
+        .categories-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .categories-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .categories-list {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1.5rem;
+        }
+
+        .category-btn {
+            flex-shrink: 0;
+            background: white;
+            padding: 1rem 2rem;
+            border: 1px solid #e0f2fe;
+            border-radius: 9999px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .category-btn:hover {
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .vendors-section {
+            padding: 3rem 2rem;
+        }
+
+        .vendors-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .vendors-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .vendor-card {
+            background: white;
+            border: 1px solid #e0f2fe;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .vendor-card:hover {
+            border-color: #0891b2;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .vendor-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: #164e63;
+        }
+
+        .vendor-category {
+            color: #0891b2;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #0891b2;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .vendors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rating-card {
+                position: static;
+                margin-top: 1rem;
+            }
+
+            .categories-list {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🌊</div>
+            <span class="logo-text">Breeze</span>
+        </div>
+        <div class="nav-links">
+            <a href="#restaurants">Restaurants</a>
+            <a href="#beach-rentals">Beach Rentals</a>
+            <a href="#offers">Offers</a>
+        </div>
+        <div class="nav-icons">
+            <button class="icon-btn">🔍</button>
+            <button class="icon-btn cart-badge">🛍️</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="subtitle">Fresh & Local</span>
+            <h1>Coastal flavors <br><em>delivered to your towel.</em></h1>
+            <div class="search-box">
+                <span style="padding: 0 1rem; color: #0891b2;">📍</span>
+                <input type="text" placeholder="Enter beach or hotel name..." />
+                <button>Find Food</button>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=800" alt="Seafood Platter" />
+            </div>
+            <div class="rating-card">
+                <div class="rating-number">4.9</div>
+                <div class="rating-info">
+                    <p>Fastest Catch</p>
+                    <p>Top rated in Malibu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="categories-container">
+            <h2>Ride the wave of flavor</h2>
+            <div class="categories-list">
+                <button class="category-btn">Poke Bowls</button>
+                <button class="category-btn">Oysters</button>
+                <button class="category-btn">Acai</button>
+                <button class="category-btn">Iced Coffee</button>
+                <button class="category-btn">Local Beer</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendors Section -->
+    <section class="vendors-section">
+        <div class="vendors-container">
+            <h2>Popular Vendors in Kilifi</h2>
+            <div class="vendors-grid" id="vendorsGrid">
+                <div class="loading">Loading vendors from database...</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Fetch vendors from API
+        async function loadVendors() {
+            try {
+                const response = await fetch('/api/vendors');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch vendors');
+                }
+                const vendors = await response.json();
+                displayVendors(vendors);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('vendorsGrid').innerHTML = `
+                    <div class="error">Error loading vendors: ${error.message}</div>
+                `;
+            }
+        }
+
+        function displayVendors(vendors) {
+            const grid = document.getElementById('vendorsGrid');
+            
+            if (vendors.length === 0) {
+                grid.innerHTML = '<p>No vendors found</p>';
+                return;
+            }
+
+            grid.innerHTML = vendors.map(vendor => `
+                <div class="vendor-card">
+                    <div class="vendor-name">${vendor.name}</div>
+                    <div class="vendor-category">${vendor.category}</div>
+                </div>
+            `).join('');
+        }
+
+        // Load vendors when page loads
+        document.addEventListener('DOMContentLoaded', loadVendors);
+    </script>
+</body>
+</html>
