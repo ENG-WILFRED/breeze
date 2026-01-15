@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(100)
+  category  String  @db.VarChar(50)
+  longitude Float
+  latitude  Float
+
+  @@index([longitude, latitude])
+}
+
+model Order {
+  id                  Int     @id @default(autoincrement())
+  customerName        String  @db.VarChar(100)
+  orderDetails        Json
+  deliveryLongitude   Float
+  deliveryLatitude    Float
+  deliveryAddressNote String? @db.Text
+  subCounty           String? @db.VarChar(50)
+  status              String  @default("pending") @db.VarChar(20)
+  createdAt           DateTime @default(now())
+
+  @@index([deliveryLongitude, deliveryLatitude])
+}
